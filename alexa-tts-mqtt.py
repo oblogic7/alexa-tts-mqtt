@@ -7,8 +7,8 @@ MQTT_BROKER = environ.get('MQTT_BROKER')
 MQTT_PORT = environ.get('MQTT_PORT', 1883)
 MQTT_USER = environ.get('MQTT_USER')
 MQTT_PASS = environ.get('MQTT_PASS')
-MQTT_TOPIC = environ.get('MQTT_TOPIC', 'alexa/tts')
-MQTT_STATUS_TOPIC = environ.get('MQTT_STATUS_TOPIC', 'alexa/status')
+MQTT_BASE_TOPIC = environ.get('MQTT_TOPIC', 'alexa')
+MQTT_STATUS_TOPIC = 'status'
 
 
 def send_alexa_message(device, msg):
@@ -27,9 +27,9 @@ def get_device_list():
 
 
 def on_message(client, userdata, message):
-    parts = message.topic.split('/')
+    parts = message.topic.replace('{}/'.format(MQTT_BASE_TOPIC), '').split('/')
 
-    device = parts[2] or None
+    device = parts[1] or None
     tts_message = str(message.payload.decode("utf-8"))
 
     try:
@@ -43,7 +43,9 @@ def on_connect(client, userData, flags, rc):
         try:
             devices = get_device_list()
 
-            client.subscribe('{}/#'.format(MQTT_TOPIC), 0)
+            # Subscribe to TTS topic
+            client.subscribe('{}/tts/#'.format(MQTT_BASE_TOPIC), 0)
+
             client.publish(MQTT_STATUS_TOPIC,
                            str(dict(status='online',
                                     available_devices=devices)),
@@ -87,7 +89,10 @@ def _handle_exception(client, e):
 
 
 client = mqtt.Client("alexatts")
-client.username_pw_set(MQTT_USER, password=MQTT_PASS)
+
+if MQTT_USER and MQTT_PASS:
+    client.username_pw_set(MQTT_USER, password=MQTT_PASS)
+
 client.on_message = on_message
 client.on_connect = on_connect
 client.on_disconnect = on_disconnect
