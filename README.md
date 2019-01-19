@@ -53,7 +53,7 @@ Status update messages are published and retained on the `MQTT_STATUS_TOPIC`.
 It is useful to subscribe to these messages to be notified of issues with the
 Alexa cookie or other errors that may be encountered.
 
-#####Online Message:
+*Online Message:*
 ```
 {
     'status': 'online',
@@ -61,7 +61,7 @@ Alexa cookie or other errors that may be encountered.
 }
 ```
 
-#####Offline Message:
+*Offline Message:*
 ```
 {
     'status': 'offline',
