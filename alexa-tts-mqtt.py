@@ -17,6 +17,8 @@ def send_alexa_message(device, msg):
 
     cmd_output = _call(cmd)
 
+    print(cmd_output)
+
 
 def get_device_list():
     cmd = '/ha-alexa-tts/alexa_remote_control.sh -a'
