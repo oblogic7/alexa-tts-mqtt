@@ -34,6 +34,9 @@ def on_message(client, userdata, message):
     device = parts[1] or None
     tts_message = str(message.payload.decode("utf-8"))
 
+    print(device)
+    print(tts_message)
+
     try:
         send_alexa_message(device, tts_message)
     except RuntimeError as e:
