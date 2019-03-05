@@ -51,7 +51,7 @@ def on_connect(client, userData, flags, rc):
             # Subscribe to TTS topic
             client.subscribe('{}/tts/#'.format(MQTT_BASE_TOPIC), 0)
 
-            client.publish(MQTT_STATUS_TOPIC,
+            client.publish('{}/{}'.format(MQTT_BASE_TOPIC, MQTT_STATUS_TOPIC),
                            str(dict(status='online',
                                     available_devices=devices)),
                            retain=True)
