@@ -86,7 +86,7 @@ def _call(cmd):
 
 
 def _handle_exception(client, e):
-    client.publish(MQTT_STATUS_TOPIC,
+    client.publish('{}/{}'.format(MQTT_BASE_TOPIC, MQTT_STATUS_TOPIC),
                    str(dict(status='offline', message=e)), retain=True)
     client.disconnect()
 
