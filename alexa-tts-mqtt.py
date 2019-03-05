@@ -1,3 +1,4 @@
+import json
 import time
 import paho.mqtt.client as mqtt
 from subprocess import Popen, PIPE, STDOUT, call
@@ -52,8 +53,8 @@ def on_connect(client, userData, flags, rc):
             client.subscribe('{}/tts/#'.format(MQTT_BASE_TOPIC), 0)
 
             client.publish('{}/{}'.format(MQTT_BASE_TOPIC, MQTT_STATUS_TOPIC),
-                           str(dict(status='online',
-                                    available_devices=devices)),
+                           json.dumps(dict(status='online',
+                                           available_devices=devices)),
                            retain=True)
 
         except RuntimeError as e:
@@ -87,7 +88,7 @@ def _call(cmd):
 
 def _handle_exception(client, e):
     client.publish('{}/{}'.format(MQTT_BASE_TOPIC, MQTT_STATUS_TOPIC),
-                   str(dict(status='offline', message=e)), retain=True)
+                   json.dumps(dict(status='offline', message=e)), retain=True)
     client.disconnect()
 
     raise e
