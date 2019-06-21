@@ -1,4 +1,4 @@
-#!/bin/sh
+    #!/bin/sh
 #
 # Amazon Alexa Remote Control
 #  alex(at)loetzimmer.de
@@ -433,7 +433,7 @@ fi
 #
 ${CURL} ${OPTS} -s -c ${COOKIE} -b ${COOKIE} -A "${BROWSER}" -H "DNT: 1" -H "Connection: keep-alive" -L\
  -H "Referer: https://alexa.${AMAZON}/spa/index.html" -H "Origin: https://alexa.${AMAZON}"\
- https://${ALEXA}/api/language > /dev/null
+ https://${ALEXA}/templates/oobe/d-device-pick.handlebars > /dev/null
 
 rm -f "${TMP}/.alexa.login"
 rm -f "${TMP}/.alexa.header"
