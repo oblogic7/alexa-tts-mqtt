@@ -41,7 +41,7 @@ def on_message(client, userdata, message):
     try:
         send_alexa_message(device, tts_message)
     except RuntimeError as e:
-        _handle_exception(client, e)
+        _handle_exception(client, e.message)
 
 
 def on_connect(client, userData, flags, rc):
