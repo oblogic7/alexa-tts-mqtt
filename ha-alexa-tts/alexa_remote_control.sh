@@ -414,13 +414,9 @@ ${CURL} ${OPTS} -s -D "${TMP}/.alexa.header2" -c ${COOKIE} -b ${COOKIE} -A "${BR
 
 # check whether the login has been successful or exit otherwise
 if [ -z "$(grep 'Location: https://alexa.*html' ${TMP}/.alexa.header2)" ] ; then
-	echo "ERROR: Amazon Login was unsuccessful. Possibly you get a captcha login screen."
-	echo " Try logging in to https://alexa.${AMAZON} with your browser. In your browser"
-	echo " make sure to have all Amazon related cookies deleted and Javascript disabled!"
-	echo
-	echo " (For more information have a look at ${TMP}/.alexa.login)"
+	echo "ERROR: Amazon Login was unsuccessful."
 
-	rm -f ${COOKIE}
+
 	rm -f "${TMP}/.alexa.header"
 	rm -f "${TMP}/.alexa.header2"
 	rm -f "${TMP}/.alexa.postdata"
