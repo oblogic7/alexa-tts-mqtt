@@ -58,7 +58,7 @@ def on_connect(client, userData, flags, rc):
                            retain=True)
 
         except RuntimeError as e:
-            _handle_exception(client, e)
+            _handle_exception(client, e.message)
 
     else:
         print("Connection error ", rc)
@@ -90,8 +90,6 @@ def _handle_exception(client, e):
     client.publish('{}/{}'.format(MQTT_BASE_TOPIC, MQTT_STATUS_TOPIC),
                    json.dumps(dict(status='offline', message=e)), retain=True)
     client.disconnect()
-
-    raise e
 
 
 client = mqtt.Client("alexatts")
