@@ -41,7 +41,7 @@ def on_message(client, userdata, message):
     try:
         send_alexa_message(device, tts_message)
     except RuntimeError as e:
-        _handle_exception(client, e.message)
+        _handle_exception(client, e)
 
 
 def on_connect(client, userData, flags, rc):
@@ -58,7 +58,7 @@ def on_connect(client, userData, flags, rc):
                            retain=True)
 
         except RuntimeError as e:
-            _handle_exception(client, e.message)
+            _handle_exception(client, e)
 
     else:
         print("Connection error ", rc)
@@ -88,8 +88,10 @@ def _call(cmd):
 
 def _handle_exception(client, e):
     client.publish('{}/{}'.format(MQTT_BASE_TOPIC, MQTT_STATUS_TOPIC),
-                   json.dumps(dict(status='offline', message=e)), retain=True)
+                   json.dumps(dict(status='offline', message=str(e))), retain=True)
     client.disconnect()
+
+    raise e
 
 
 client = mqtt.Client("alexatts")
