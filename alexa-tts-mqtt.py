@@ -88,10 +88,9 @@ def _call(cmd):
 
 def _handle_exception(client, e):
     client.publish('{}/{}'.format(MQTT_BASE_TOPIC, MQTT_STATUS_TOPIC),
-                   json.dumps(dict(status='offline', message=str(e))), retain=True)
+                   json.dumps(dict(status='offline', message=str(e))),
+                   retain=True)
     client.disconnect()
-
-    raise e
 
 
 client = mqtt.Client("alexatts")
