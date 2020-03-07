@@ -342,7 +342,7 @@ case "$COMMAND" in
 	speak:*)
 			SEQUENCECMD='Alexa.Speak'
 
-			TTS=$(echo ${COMMAND##*:} | ${SED} -E 's/[^-a-zA-Z0-9_.,?! ]//g' | sed 's/ /_/g')
+			TTS=$(echo ${COMMAND##*:} | ${SED} -E 's/[^-a-zA-Z0-9_.,?! ]//g' | sed 's/ /-/g')
 			TTS=",\\\"textToSpeak\\\":\\\"${TTS}\\\""
 			;;
 	automation:*)
